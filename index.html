@@ -55,13 +55,25 @@
 	
 	var can = true;
 	var sounds = [
-		new Audio("audio/goedemorgen.wav"),
-		new Audio("audio/hoihoi.wav")
+		{tag:new Audio("audio/goedemorgen.wav"), before: 12},
+		{tag:new Audio("audio/hoihoi.wav")},
+		{tag:new Audio("audio/hallo.wav")},
+		{tag:new Audio("audio/goedemiddag"), after: 12},
+		{tag:new Audio("audio/burp"), custom: function(){ return Math.random()>.9; }}
 		];
 	var cd;
 	
 	function isMorning(){ return (cd = (new Date).getHours()) > 6 && cd < 10; }
 	function audio(){
+		var pos = [], h = (new Date()).getHours();
+		for(n in sounds){
+			var add = true;
+			if(sounds[n].before && sounds[n].before < h) add = false;
+			if(sounds[n].after && sounds[n].after > h) add = false;
+			if(sounds[n].custom && !sounds[n].custom()) add = false;
+			if(add)
+				pos.push(sounds[n].tag);
+		}
 		return sounds[isMorning() ? 0 : 1];
 	}
 	
