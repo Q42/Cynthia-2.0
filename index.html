@@ -74,7 +74,7 @@
 			if(add)
 				pos.push(sounds[n].tag);
 		}
-		return sounds[isMorning() ? 0 : 1];
+		return pos[Math.round(Math.random()*pos.length)];
 	}
 	
 	function goedemorgen(){
