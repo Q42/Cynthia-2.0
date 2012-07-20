@@ -1,0 +1,85 @@
+<!DOCTYPE>
+<html>
+<head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<style>
+body {
+	overflow:hidden;
+}
+#body {
+	position: absolute;
+	top: 0;
+	bottom:0;
+	left: 0;
+	right: 0;
+	background: #fff url("body copy.jpg") no-repeat right bottom;
+	background-size: contain;
+	z-index: 1;
+}
+
+#arm {
+	background: url(arm.png) no-repeat;
+	background-size: contain;
+	width: 50%;
+	top: 50%;
+	bottom: -50%;
+	left: 0%;
+	position: absolute;
+	z-index: 10;
+	-webkit-transform: rotate(-60deg);
+	-webkit-animation-duration: 2s;
+}
+
+@-webkit-keyframes shake {
+	0%, 100% {
+		top: 50%;
+		bottom: -50%;
+		left: 0%;
+		-webkit-transform: rotate(-60deg);
+	}
+	50% {
+		top: 30%;
+		bottom: -30%;
+		left: 40%;
+		-webkit-transform: rotate(50deg);
+	}
+}
+
+.smile #mouth {
+	position: absolute;
+	background: url(smile.png) no-repeat;
+	background-size: contain;
+	width: 25%;
+	height: 12%;
+	right: 9%;
+	top: 42%;
+	-webkit-transform: rotate(-4deg);
+}
+</style>
+</head>
+<body class="move">
+	<video id="webcam" autoplay width="640" height="480"></video>
+	<canvas id="canvas-source" width="640" height="480"></canvas>
+	<canvas id="canvas-blended" width="640" height="480"></canvas>
+	<div id="body">
+		<div id="mouth"></div>
+	</div>
+	<div id="mouth-eye1"></div>
+	<div id="mouth-eye2"></div>
+	<div id="mouth-lower"></div>
+	<div id="mouth-upper"></div>
+	<div id="arm"></div>
+</body>
+<script>
+	document.getElementById("arm").addEventListener('webkitAnimationEnd', function(){
+	    this.style.webkitAnimationName = '';
+		document.body.className = "";
+	}, false);
+
+	document.body.onkeypress = function(){
+	    document.getElementById("arm").style.webkitAnimationName = 'shake';
+		document.body.className = "smile";
+	    return false;
+	};
+</script>
+</html>
