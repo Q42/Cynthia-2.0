@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Javascript motion detection</title>
+	<title>Cynthia 2.0</title>
 	<link rel="stylesheet" href="styles/main.css"/>
 	<link rel="stylesheet" href="styles/q42.css"/>
 	
@@ -48,23 +48,32 @@
 	document.body.onkeypress = function(){
 	    document.getElementById("arm").style.webkitAnimationName = 'shake';
 		document.body.className = "smile";
-		goede.play();
+		audio().play();
 	};
 	
 	$("#keuken").width($("#body").height()*0.66745283);
 	
 	var can = true;
-	var goede = new Audio("goedemorgen.wav");
+	var sounds = [
+		new Audio("audio/goedemorgen.wav"),
+		new Audio("audio/hoihoi.wav")
+		];
+	var cd;
+	
+	function isMorning(){ return (cd = (new Date).getHours()) > 6 && cd < 10; }
+	function audio(){
+		return sounds[isMorning() ? 0 : 1];
+	}
 	
 	function goedemorgen(){
 	    if(can){
 			document.getElementById("arm").style.webkitAnimationName = 'shake';
 			document.body.className = "smile";
-			goede.play();
+			audio().play();
 			can = false;
 			setTimeout(function(){
 				can = true;
-			}, 1000*60*5);
+			}, 1000 * (isMorning() && 7 || 3*60) );
 		}
 	}
 </script>
