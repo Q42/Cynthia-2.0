@@ -74,8 +74,8 @@
 			if(add)
 				pos.push(sounds[n].tag);
 		}
-		var index = Math.round(Math.random()*pos.length);
-		return pos[Math.min(index, pos.length)];
+		var index = Math.round(Math.random()*pos.length-1);
+		return pos[index];
 	}
 	
 	function goedemorgen(){
