@@ -51,7 +51,7 @@ function init() {
 
 		mlib[ i ] = material;
 
-		mesh = tQuery.createPlane( 1, 1, 300, 300, mlib[i] ).addTo(world);
+		mesh = tQuery.createPlane( 1, 1, 320, 240, mlib[i] ).addTo(world);
 		
 		mesh.position.x = i - ( params.length - 1 ) / 2;
 		mesh.position.y = i % 2 - 0.5;
