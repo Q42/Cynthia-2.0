@@ -29,7 +29,7 @@ function audio(){
 		if(sounds[n].before && sounds[n].before < h) add = false;
 		if(sounds[n].after && sounds[n].after > h) add = false;
 		if(sounds[n].custom && !sounds[n].custom()) add = false;
-		if(!sounds[n].play) add = false;
+		if(!sounds[n].tag.play) add = false;
 		if(add)
 			pos.push(sounds[n].tag);
 	}

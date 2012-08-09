@@ -33,7 +33,7 @@ body {
 	left: 0%;
 	position: absolute;
 	z-index: 10;
-	-webkit-transform: rotate(-60deg);
+	-webkit-transform: rotate3d(0,0,1,-60deg);
 	-webkit-animation-duration: 2s;
 }
 
@@ -42,13 +42,13 @@ body {
 		top: 50%;
 		bottom: -50%;
 		left: 0%;
-		-webkit-transform: rotate(-60deg);
+		-webkit-transform: rotate3d(0,0,1,-60deg);
 	}
 	50% {
 		top: 30%;
 		bottom: -30%;
 		left: 40%;
-		-webkit-transform: rotate(50deg);
+		-webkit-transform: rotate3d(0,0,1,50deg);
 	}
 }
 
