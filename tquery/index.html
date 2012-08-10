@@ -9,27 +9,50 @@
 	uniform vec2 resolution;
 	uniform sampler2D texture;
 
+	// ccv.js shared's
+	uniform int interval;
+	uniform int min_neighbors;
+	uniform int scale;
+	uniform int next;
+	uniform int max_scale;
+	
 	varying vec2 vUv;
 	
 	// INSERT_CLASSIFIERS
 
+	// INSERT_STAGES
+
 	void main( void ) 
 	{
 		vec2 position = 0.5 + -1.0 * vUv;
+		
+		for(int x = 0; x < 640; x++){
+			//
+		}
+		
+		gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
 		vec3 color = texture2D( texture, position ).rgb;
+		float gray = color.r * .4 + color.b * .3 + color.g * .3;
+		color.r = color.g = color.b = gray;
+
 		gl_FragColor = vec4( color, 1.0 );
+		
+		// INSERT_STAGE_CALLS
+		
+		//gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 	}
 </script>
 
 <script id="vertexShader" type="x-shader/x-vertex">
 
 	varying vec2 vUv;
+	uniform vec2 resolution;
 
 	void main()
 	{
 		vUv = position.xy;
-		vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-		gl_Position = projectionMatrix * mvPosition;
+		vUv.x *= 0.75;
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 	}
 
 </script>
