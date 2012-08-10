@@ -1,15 +1,51 @@
 <!doctype html><title>Minimal tQuery Page</title>
 <script src="./tquery-all.js"></script>
+<script src="face.js"></script>
 <body>
 
-<script id="fragment_shader2" type="x-shader/x-fragment">
+<script id="fragmtShader" type="x-shader/x-fragment">
 
 	uniform float time;
 	uniform vec2 resolution;
-
 	uniform sampler2D texture;
 
 	varying vec2 vUv;
+	
+	// Stage classifiers and features
+	/*uniform int face_width;
+	uniform int face_height;
+	
+	uniform int face_num_stages;
+	uniform float face_stage_thresholds[1];
+	uniform int face_stage_num_features[1];
+	uniform float face_stage_alphas[1];
+	
+	uniform int face_stage_feature_sizes[1];
+	uniform int face_stage_feature_nx[1];
+	uniform int face_stage_feature_ny[1];
+	uniform int face_stage_feature_nz[1];
+	uniform int face_stage_feature_px[1];
+	uniform int face_stage_feature_py[1];
+	uniform int face_stage_feature_pz[1];
+	
+	// Code
+	int stage( int num, int featuresBefore ) {
+		
+		int num_features 	= face_stage_num_features[num];
+		float threshold 	= face_stage_thresholds[num];
+		int alphaStart		= featuresBefore * 2;
+		int featureStart 	= featuresBefore;
+		
+		for(int i = 0; i < num_features; i++) {
+			//feature(featureStart, alphaStart);
+			featureStart++;
+			alphaStart += 2;
+		}
+		return featureStart + num_features;
+		
+	}*/
+	
+	// INSERT_CLASSIFIERS
 
 	void main( void ) {
 
@@ -23,16 +59,19 @@
 //		uv.y = sin( a ) / r;
 //		uv /= 10.0;
 //		uv += time * 0.05;
+		vec2 shift = position - 0.1;
 
 		vec3 color = texture2D( texture, position ).rgb;
+		vec3 adj = texture2D( texture, shift ).rgb;
 		
-		if(color.r > 0.5){
+		if(color.r > 0.7){
 			color.r = 0.0;
 			color.b = 0.0;
-			color.g = 0.0;
+			color.r = 0.0;
+			color.g = 1.0;
 		}
 
-		gl_FragColor = vec4( color, 1.0 );//* r * 1.5, 1.0 );
+		gl_FragColor = vec4( color - adj, 1.0 );//* r * 1.5, 1.0 );
 
 	}
 </script>

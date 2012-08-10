@@ -1,14 +1,6 @@
-var world = tQuery.createWorld().boilerplate().start();
-
-//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
-var container, stats;
-
 var start_time;
 
-var camera, scene, renderer;
-
-var uniforms1, uniforms2, material1, material2, mesh, meshes = [];
+var world, uniforms, material, mesh;
 
 var mouseX = 0, mouseY = 0,
 lat = 0, lon = 0, phy = 0, theta = 0;
@@ -18,12 +10,25 @@ var windowHalfY = window.innerHeight / 2;
 
 init();
 
-function init() {
-
-	container = document.getElementById( 'container' );
+/** 
+ * Insert classifier data into the shader program
+ *
+ * include "// INSERT_CLASSIFIERS" in the program 
+ * to get it replaced by the data
+ */
+function insertClassifiers(shader, cascade) {
 	
-	scene = world.scene();
+	var str = "ofjewio";
+	return shader.replace("// INSERT_CLASSIFIERS", str);
 
+}
+
+/**
+ * Initialize world
+ */
+function init() {
+	var world = tQuery.createWorld().boilerplate().start();
+	
 	world.camera().position.z = 2;
 
 	start_time = Date.now();
@@ -85,11 +90,17 @@ function init() {
 
 	uniforms.texture.texture.wrapS = uniforms.texture.texture.wrapT = THREE.Repeat;
 
+	var shaders = [
+		document.getElementById( 'vertexShader' ).textContent,
+		document.getElementById( 'fragmtShader' ).textContent
+	];
+	shaders[1] = insertClassifiers(shaders[1], cascade);
+
 	// Shader material
 	material = new THREE.ShaderMaterial( {
 		uniforms: uniforms,
-		vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'fragment_shader2' ).textContent
+		vertexShader: shaders[0],
+		fragmentShader: shaders[1]
 	} );
 	
 	// Plane displaying material
