@@ -1,4 +1,4 @@
-//(function() {
+(function() {
 
 	function hasGetUserMedia() {
 		// Note: Opera builds are unprefixed.
@@ -27,12 +27,12 @@
 
 	if (navigator.getUserMedia) {
 		navigator.getUserMedia({audio: false, video: true}, function(stream) {
-			video.src = video1.src = video2.src = stream;
+			video.srcObject = video1.srcObject = video2.srcObject = stream;
 			initialize();
 		}, webcamError);
 	} else if (navigator.webkitGetUserMedia) {
 		navigator.webkitGetUserMedia({audio: false, video: true}, function(stream) {
-			video.src = video1.src = video2.src = window.webkitURL.createObjectURL(stream);
+			video.srcObject = video1.srcObject = video2.srcObject = window.webkitURL.createObjectURL(stream);
 			initialize();
 		}, webcamError);
 	} else {
@@ -198,4 +198,4 @@
 	}
 
 
-//})();
+})();
