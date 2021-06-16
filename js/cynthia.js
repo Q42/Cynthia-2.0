@@ -9,8 +9,6 @@ document.body.onkeypress = function(){
 	audio().play();
 };
 
-$("#keuken").width($("#body").height()*0.66745283);
-
 var can = true;
 var sounds = [
 	{tag:new Audio("audio/goedemorgen.wav"), before: 12},

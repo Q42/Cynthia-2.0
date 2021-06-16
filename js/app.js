@@ -2,8 +2,7 @@
 
 	function hasGetUserMedia() {
 		// Note: Opera builds are unprefixed.
-		return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-			navigator.mozGetUserMedia || navigator.msGetUserMedia);
+		return !!navigator.mediaDevices;
 	}
 
 	if (hasGetUserMedia()) {
@@ -22,22 +21,17 @@
 	};
 
 	var video = $('#webcam')[0];
-	var video1 = $('#webcam1')[0];
-	var video2 = $('#webcam2')[0];
+	var video1 = $('#webcam1 video')[0];
+	var video2 = $('#webcam2 video')[0];
 
-	if (navigator.getUserMedia) {
-		navigator.getUserMedia({audio: false, video: true}, function(stream) {
+	if (navigator.mediaDevices) {
+		navigator.mediaDevices.getUserMedia({audio: false, video: { facingMode: "user" }}).then(function(stream) {
 			video.srcObject = video1.srcObject = video2.srcObject = stream;
 			initialize();
 		}, webcamError);
-	} else if (navigator.webkitGetUserMedia) {
-		navigator.webkitGetUserMedia({audio: false, video: true}, function(stream) {
-			video.srcObject = video1.srcObject = video2.srcObject = window.webkitURL.createObjectURL(stream);
-			initialize();
-		}, webcamError);
 	} else {
-		//video.src = 'somevideo.webm'; // fallback.
-	}
+		return;
+	}		
 
 	var AudioContext = (
 		window.AudioContext ||
@@ -142,7 +136,7 @@
 	function threshold(value) {
 		//Adjusted by herman
 		return (value > 0x25) ? 0xFF : 0;
-		return (value > 0x15) ? 0xFF : 0;
+		// return (value > 0x15) ? 0xFF : 0;
 	}
 
 	function difference(target, data1, data2) {
